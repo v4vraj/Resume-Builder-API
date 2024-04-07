@@ -16,6 +16,8 @@ const generateDocxTemplate = async (formData) => {
       paragraphLoop: true,
       linebreaks: true,
     });
+
+    // Render the template
     doc.render({
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -27,20 +29,12 @@ const generateDocxTemplate = async (formData) => {
       state: formData.state,
       country: formData.country,
       description: formData.description,
-      university: formData.university,
-      degree: formData.degree,
-      cgpa: formData.cgpa,
-      year: formData.year,
+      educations: formData.educations, // Make sure the key matches the placeholder in the template
+      experience: formData.exprience, // Make sure the key matches the placeholder in the template
+      projects: formData.projects, // Make sure the key matches the placeholder in the template
       skills: formData.skills,
-      company: formData.company,
-      role: formData.role,
-      experienceDescription: formData.experienceDescription,
-      joining: formData.joining,
-      endDate: formData.endDate,
-      projectTitle: formData.projectTitle,
-      githubLink: formData.githubLink,
-      projectDescription: formData.projectDescription,
     });
+
     const buf = doc.getZip().generate({
       type: "nodebuffer",
       compression: "DEFLATE",
