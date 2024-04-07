@@ -19,6 +19,7 @@ const generateDocxTemplate = async (formData) => {
     doc.render({
       firstName: formData.firstName,
       lastName: formData.lastName,
+      professionalTitle: formData.professionalTitle,
       email: formData.email,
       phoneNumber: formData.phone,
       linkedIn: formData.linkedIn,
@@ -36,6 +37,9 @@ const generateDocxTemplate = async (formData) => {
       experienceDescription: formData.experienceDescription,
       joining: formData.joining,
       endDate: formData.endDate,
+      projectTitle: formData.projectTitle,
+      githubLink: formData.githubLink,
+      projectDescription: formData.projectDescription,
     });
     const buf = doc.getZip().generate({
       type: "nodebuffer",
