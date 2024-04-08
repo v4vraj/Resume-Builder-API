@@ -5,7 +5,6 @@ const Docxtemplater = require("docxtemplater");
 
 const generateDocxTemplate = async (formData) => {
   try {
-    console.log(formData);
     // Load the DOCX template file
     const content = fs.readFileSync(
       path.resolve(__dirname, "templates.docx"),
@@ -29,9 +28,9 @@ const generateDocxTemplate = async (formData) => {
       state: formData.state,
       country: formData.country,
       description: formData.description,
-      educations: formData.educations, // Make sure the key matches the placeholder in the template
-      experience: formData.exprience, // Make sure the key matches the placeholder in the template
-      projects: formData.projects, // Make sure the key matches the placeholder in the template
+      educations: formData.educations,
+      experience: formData.exprience,
+      projects: formData.projects,
       skills: formData.skills,
     });
 
@@ -42,6 +41,7 @@ const generateDocxTemplate = async (formData) => {
     fs.writeFileSync(path.resolve(__dirname, "output.docx"), buf);
 
     console.log("DOCX template generated successfully.");
+    return buf;
   } catch (error) {
     console.error("Error generating DOCX template:", error);
   }

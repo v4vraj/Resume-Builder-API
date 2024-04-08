@@ -10,8 +10,17 @@ app.use(cors());
 app.post("/api/generate-docx", async (req, res) => {
   try {
     const formData = req.body;
-    const htmlContent = await generateDocxTemplate(formData);
-    res.send(htmlContent);
+    const docxBuffer = await generateDocxTemplate(formData);
+    console.log(docxBuffer);
+    // Set headers for downloading the file
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
+    res.setHeader("Content-Disposition", 'attachment; filename="output.docx"');
+
+    // Send the generated .docx file buffer as response
+    res.send(docxBuffer);
   } catch (error) {
     console.error("Error generating DOCX template:", error);
     throw new Error("Error generating DOCX template: " + error.message);
