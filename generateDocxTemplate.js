@@ -34,16 +34,17 @@ const generateDocxTemplate = async (formData) => {
       skills: formData.skills,
     });
 
+    const uniqueFilename = `${formData.firstName}_${Date.now()}.docx`;
     const buf = doc.getZip().generate({
       type: "nodebuffer",
       compression: "DEFLATE",
     });
-    fs.writeFileSync(path.resolve(__dirname, "output.docx"), buf);
+    fs.writeFileSync(path.resolve(__dirname, uniqueFilename), buf);
 
     console.log("DOCX template generated successfully.");
-    return buf;
+    return { filename: uniqueFilename, buffer: buf };
   } catch (error) {
-    console.error("Error generating DOCX template:", error);
+    console.error("Error generating DOCX template 1:", error);
   }
 };
 

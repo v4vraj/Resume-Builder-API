@@ -11,11 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1596.0",
     "cors": "^2.8.5",
     "docxtemplater": "^3.46.2",
+    "dotenv": "^16.4.5",
     "html-docx-js": "^0.3.1",
     "jszip": "^3.10.1",
     "mammoth": "^1.7.1",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.1",
     "nodemon": "^3.1.0",
     "pizzip": "^3.1.6",
     "util": "^0.12.5"
