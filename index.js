@@ -2,7 +2,7 @@ const express = require("express");
 const generateDocxTemplate = require("./generateDocxTemplate");
 const cors = require("cors");
 const mammoth = require("mammoth");
-const resumeRoute = require("./routes/resume.route.js"); // Import your routes
+const resumeRoute = require("./routes/resume.route.js");
 const connectDB = require("./db.js");
 require("dotenv").config();
 
@@ -19,7 +19,6 @@ app.use(express.json());
 app.use(cors());
 
 connectDB();
-// Use your resume routes
 app.use("/api", resumeRoute);
 
 const PORT = process.env.PORT || 3000;

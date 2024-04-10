@@ -33,7 +33,7 @@ const resumeSchema = new mongoose.Schema({
   description: String,
   educations: [educationSchema],
   skills: String,
-  experience: [experienceSchema], // Add experience field
+  experience: [experienceSchema],
   projects: [projectSchema],
   docxUrl: String,
 });

@@ -5,7 +5,6 @@ const Docxtemplater = require("docxtemplater");
 
 const generateDocxTemplate = async (formData) => {
   try {
-    // Load the DOCX template file
     const content = fs.readFileSync(
       path.resolve(__dirname, "templates.docx"),
       "binary"
@@ -15,8 +14,6 @@ const generateDocxTemplate = async (formData) => {
       paragraphLoop: true,
       linebreaks: true,
     });
-
-    // Render the template
     doc.render({
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -29,7 +26,7 @@ const generateDocxTemplate = async (formData) => {
       country: formData.country,
       description: formData.description,
       educations: formData.educations,
-      experience: formData.exprience,
+      experience: formData.experience,
       projects: formData.projects,
       skills: formData.skills,
     });
