@@ -73,3 +73,13 @@ exports.saveEditedDocx = (req, res) => {
     res.status(500).json({ error: "Error saving edited DOCX" });
   }
 };
+
+const uploadFileToS3 = (fileBuffer, bucketName, key) => {
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+    Body: fileBuffer,
+  };
+
+  return s3.upload(params).promise();
+};
