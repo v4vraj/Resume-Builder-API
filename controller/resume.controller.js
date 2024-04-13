@@ -11,30 +11,38 @@ const s3 = new AWS.S3();
 exports.generateDocx = async (req, res) => {
   try {
     const formData = req.body;
-    console.log(formData);
-    const { filename, docxBuffer } = await generateDocxTemplate(formData);
+    const { filename, buffer } = await generateDocxTemplate(formData);
+    console.log("docxBuffer", buffer);
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     );
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-
     let docxUrl;
-    if (process.env.NODE_ENV === "production") {
+    console.log("check", process.env.NODE_ENV);
+    if (process.env.NODE_ENV.trim() === "development") {
+      // Save the file locally for development
+      console.log("Entering development environment");
+      const filePath = `C:/Users/Vraj/Documents/resume-builder/Server/${filename}`;
+      // Inside the if block for the development environment
+      console.log("Is docxBuffer a Buffer?", Buffer.isBuffer(buffer));
+
+      try {
+        fs.writeFileSync(filePath, buffer);
+        console.log("File saved successfully:", filePath);
+      } catch (err) {
+        console.error("Error writing file:", err);
+        throw err;
+      }
+
+      console.log("filePath", filePath);
+      docxUrl = `http://localhost:10000/${filename}`;
+    } else {
       // Upload the file to S3 if in production
       const bucketName = "resumecollection";
       const key = filename;
-      const s3UploadResponse = await uploadFileToS3(
-        docxBuffer,
-        bucketName,
-        key
-      );
+      const s3UploadResponse = await uploadFileToS3(buffer, bucketName, key);
       docxUrl = s3UploadResponse.Location;
-    } else {
-      // Save the file locally for development
-      const filePath = `C:/Users/Vraj/Documents/resume-builder/Server/${filename}`;
-      fs.writeFileSync(filePath, docxBuffer);
-      docxUrl = `http://localhost:3000/${filename}`; // Assuming your local server runs on port 3000
     }
 
     const resume = new Resume(formData);
@@ -43,7 +51,6 @@ exports.generateDocx = async (req, res) => {
 
     res.send(docxBuffer);
   } catch (error) {
-    console.error("Error generating DOCX template:", error);
     res.status(500).json({ error: "Error generating DOCX template" });
   }
 };

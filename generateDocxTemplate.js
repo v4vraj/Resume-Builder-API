@@ -38,7 +38,7 @@ const generateDocxTemplate = async (formData) => {
     });
     fs.writeFileSync(path.resolve(__dirname, uniqueFilename), buf);
 
-    console.log("DOCX template generated successfully.");
+    console.log("DOCX template generated successfully 1.");
     return { filename: uniqueFilename, buffer: buf };
   } catch (error) {
     console.error("Error generating DOCX template 1:", error);
