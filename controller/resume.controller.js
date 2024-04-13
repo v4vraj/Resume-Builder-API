@@ -38,11 +38,13 @@ exports.generateDocx = async (req, res) => {
       console.log("filePath", filePath);
       docxUrl = `http://localhost:10000/${filename}`;
     } else {
+      console.log("WE are here");
       // Upload the file to S3 if in production
       const bucketName = "resumecollection";
       const key = filename;
       const s3UploadResponse = await uploadFileToS3(buffer, bucketName, key);
       docxUrl = s3UploadResponse.Location;
+      console.log(s3UploadResponse);
     }
 
     const resume = new Resume(formData);
