@@ -8,6 +8,12 @@ require("dotenv").config();
 
 const s3 = new AWS.S3();
 
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
 exports.generateDocx = async (req, res) => {
   try {
     const formData = req.body;
@@ -40,18 +46,22 @@ exports.generateDocx = async (req, res) => {
     } else {
       console.log("WE are here");
       // Upload the file to S3 if in production
-      const bucketName = "resumecollection";
-      const key = filename;
-      const s3UploadResponse = await uploadFileToS3(buffer, bucketName, key);
-      docxUrl = s3UploadResponse.Location;
-      console.log(s3UploadResponse);
+      try {
+        const bucketName = "resumebank";
+        const key = filename;
+        const s3UploadResponse = await uploadFileToS3(buffer, bucketName, key);
+        docxUrl = s3UploadResponse.Location;
+        console.log(s3UploadResponse);
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     const resume = new Resume(formData);
     resume.docxUrl = docxUrl;
     await resume.save();
 
-    res.send(docxBuffer);
+    res.send(buffer);
   } catch (error) {
     res.status(500).json({ error: "Error generating DOCX template" });
   }
@@ -89,6 +99,6 @@ const uploadFileToS3 = (fileBuffer, bucketName, key) => {
     Key: key,
     Body: fileBuffer,
   };
-
+  console.log(params);
   return s3.upload(params).promise();
 };
