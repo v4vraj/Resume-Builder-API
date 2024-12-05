@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set NODE_ENV=production && nodemon index.js"
+    "start": "set NODE_ENV=development && nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@huggingface/inference": "^2.8.1",
     "aws-sdk": "^2.1596.0",
     "cors": "^2.8.5",
     "docxtemplater": "^3.46.2",
@@ -21,6 +22,7 @@
     "mammoth": "^1.7.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.1",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.0",
     "pizzip": "^3.1.6",
     "util": "^0.12.5"

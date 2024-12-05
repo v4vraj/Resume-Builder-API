@@ -5,7 +5,7 @@ const mammoth = require("mammoth");
 const resumeRoute = require("./routes/resume.route.js");
 const connectDB = require("./db.js");
 require("dotenv").config();
-
+const aiRoute = require("./routes/ai.route.js");
 const AWS = require("aws-sdk");
 
 AWS.config.update({
@@ -19,8 +19,12 @@ app.use(express.json());
 app.use(cors());
 
 connectDB();
-app.use("/api", resumeRoute);
-const PORT = process.env.PORT || 3000; // Use the port provided by Render or default to 3000
+
+// Register routes
+app.use("/api/resumes", resumeRoute); // For resume-related routes
+app.use("/api/ai", aiRoute); // For AI-related routes
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
